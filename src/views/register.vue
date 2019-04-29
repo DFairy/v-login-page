@@ -23,6 +23,7 @@
                     </el-button>
                 </el-form-item>
             </el-form>
+            <p class='register'><router-link to='/login'>已有账号,去登录</router-link></p>
        </div>
        
    </div>
@@ -163,6 +164,13 @@ export default {
              background: rgb(3,174,189);
              color: #fff;
              border: 0;
+        }
+        .register{
+            text-align: right;
+            margin: 10px;
+            a{
+                color: #fff
+            }
         }
         
     }

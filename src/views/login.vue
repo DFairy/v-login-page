@@ -5,7 +5,7 @@
            <span>V-login</span>
        </div>
        <p>stay foolish,stay hungry</p>
-       <div class="login-input">
+       <div class="login-input" v-model="activeName">
            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm"  class="demo-ruleForm">
                 <el-form-item label="" prop="email">
                     <el-input v-model="ruleForm.email" clearable placeholder="邮箱"></el-input>
@@ -54,6 +54,7 @@ export default {
             }
         };
         return{
+            load:false,
             ruleForm: {
                 pass: '',
                 email: ''
@@ -65,24 +66,34 @@ export default {
                 email: [
                     { validator: checkEmail, trigger: 'blur' }
                 ]
-            }
+            },
+            activeName:this.$store.state.activeName
+        }
+    },
+    watch:{
+        activeName(a,b){
+            console(a,b)
         }
     },
     methods: {
       submitForm(formName) {
+          this.load=true
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              console.log(this.ruleForm)
-              this.$api.user.register({
+              this.$api.user.login({
                   email:this.ruleForm.email,
                   password:this.ruleForm.pass
-              }).then((res)=>{
-                  console.log(res)
-                  console.log(res.data.status)
-                  if(res.data.status=='0'){
-                      
+              }).then(({data})=>{
+                  this.load=false
+                  if(data.status=='0'){
+                      this.$store.dispatch('UserLogin', data.result.token)
+                      this.$store.dispatch('UserName', data.result.email)
+                      let redirect = decodeURIComponent(this.$route.query.redirect || '/');
+                      this.$router.push({
+                        path: redirect
+                      })
                   }else {
-                      this.$message.error(res.data.msg);
+                      this.$message.error(data.msg);
                   }
                   
               })

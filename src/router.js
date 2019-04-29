@@ -7,7 +7,7 @@ import Wrong from './views/wrong'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [{
@@ -36,3 +36,22 @@ export default new Router({
         }
     ]
 })
+
+// 验证 token，存在才跳转
+router.beforeEach((to, from, next) => {
+    let token = localStorage.getItem('token')
+    if (to.meta.requireAuth) {
+        if (token) {
+            next()
+        } else {
+            next({
+                path: '/login',
+                query: { redirect: to.fullPath }
+            })
+        }
+    } else {
+        next()
+    }
+})
+
+export default router
