@@ -32,7 +32,7 @@ export default {
     },
     methods:{
         get_all(){
-              this.$api.user.allUsers().then(({data})=>{
+              this.$api.user.allUsers({}).then(({data})=>{
                   if(data.status=='0'){
                      this.user=data.result
                      console.log(this.user)
