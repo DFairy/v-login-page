@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { setTimeout } from 'timers';
 export default {
     data(){
         return{
@@ -35,9 +36,12 @@ export default {
               this.$api.user.allUsers({}).then(({data})=>{
                   if(data.status=='0'){
                      this.user=data.result
-                     console.log(this.user)
                   }else {
                       this.$message.error(data.msg);
+                      let _this=this
+                      setTimeout(function(){
+                          _this.$router.push('/login')
+                      },3000)
                   }
               })            
         },

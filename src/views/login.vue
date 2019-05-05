@@ -5,7 +5,7 @@
            <span>V-login</span>
        </div>
        <p>stay foolish,stay hungry</p>
-       <div class="login-input" v-model="activeName">
+       <div class="login-input" >
            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm"  class="demo-ruleForm">
                 <el-form-item label="" prop="email">
                     <el-input v-model="ruleForm.email" clearable placeholder="邮箱"></el-input>
@@ -66,13 +66,7 @@ export default {
                 email: [
                     { validator: checkEmail, trigger: 'blur' }
                 ]
-            },
-            activeName:this.$store.state.activeName
-        }
-    },
-    watch:{
-        activeName(a,b){
-            console(a,b)
+            }
         }
     },
     methods: {

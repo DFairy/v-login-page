@@ -22,8 +22,6 @@ const list = {
     delUser(params) {
         return axios.post(`/users/delUser`, qs.stringify(params))
     },
-
-
 }
 
 export default list;
